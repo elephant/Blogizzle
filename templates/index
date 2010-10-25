@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blogizzle</title>
+    <link rel="stylesheet" type="text/css" href="static/styles.css"/>
+  </head>
+  <body>
+    <h1>Hello</h1>
+  </body>
+</html>

@@ -1,10 +1,13 @@
+import logging
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
+logging.basicConfig(level=logging.DEBUG)
+app.logger.setLevel(logging.DEBUG)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', message="hello there")
 
 @app.route('/post/new')
 def postNew():
@@ -12,7 +15,8 @@ def postNew():
 
 @app.route('/post/save', methods=['POST'])
 def postSave():
-    return render_template('post/save.html')
+    formVals = request.form
+    return render_template('post/save.html', formVals = formVals)
 
 #errors
 @app.errorhandler(404)

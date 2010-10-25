@@ -1,1 +1,24 @@
-New post
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>New Post</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css"/>
+  </head>
+  <body>
+    <h1>New Post</h1>
+    <form method="post" action="{{url_for('postSave')}}">
+        <fieldset>
+            <legend>Post</legend>
+            <input type="text" name="title" placeholder="Title" required="required" />
+            <input type="date" name="publishTime" required="required" placeholder="Publish Date" />
+            <textarea name="body"></textarea>
+        </fieldset>
+        <fieldset>
+            <legend>Author</legend>
+            <input type="text" name="name" placeholder="Name" required="required" />
+            <input type="email" name="email" placeholder="Email Address" required="required" />
+        </fieldset>
+        <button type="submit">Save</button>
+    </form>
+  </body>
+</html>

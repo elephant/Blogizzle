@@ -1,0 +1,19 @@
+body {
+    background: #000;
+    color: #fff;
+    font-family: courier,monospace;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+a {
+    color: rgb(210, 255, 255);
+}
+a:visited {
+    color: rgb(255, 255, 255);
+}
+img {
+    -moz-box-shadow:5px  5px  5px  #321936;
+    -webkit-box-shadow:5px  5px  5px  #321936;
+    box-shadow:5px  5px  5px  #321936;
+}

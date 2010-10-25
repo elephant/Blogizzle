@@ -1,1 +1,13 @@
-New post
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>New Post</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css"/>
+  </head>
+  <body>
+    <h1>{{formVals.title|default('no title')}}</h1>
+    <p>Posted on: {{formVals.publishTime|default('no publishTime')}}</p>
+    <p>By: {{formVals.name|default('no name')}}({{formVals.email|default('no email')}})</p>
+    <p>{{formVals.body|default('no body')}}</p>
+  </body>
+</html>
