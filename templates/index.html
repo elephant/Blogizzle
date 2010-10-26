@@ -5,9 +5,14 @@
     <link rel="stylesheet" type="text/css" href="/static/styles.css"/>
   </head>
   <body>
-    <h1>{{message}}</h1>
-    <ul>
-        <li><a href="{{url_for('postNew')}}">New Post</a></li>
-    </ul>
+    {{posts.__class__}}
+    {% for post in posts %}
+        {% include '_components/post.html' %}
+    {% endfor %}
+    <navigation>
+        <ul>
+            <li><a href="{{url_for('postNew')}}">New Post</a></li>
+        </ul>
+    </navigation>
   </body>
 </html>

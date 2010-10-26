@@ -1,5 +1,7 @@
 import logging
 from flask import Flask, render_template, request
+from Post import Post
+from PostDao import PostDao
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
@@ -7,7 +9,9 @@ app.logger.setLevel(logging.DEBUG)
 
 @app.route('/')
 def index():
-    return render_template('index.html', message="hello there")
+    postDao = PostDao()
+    posts = postDao.find(5)
+    return render_template('index.html', message = "hello there", posts = posts)
 
 @app.route('/post/new')
 def postNew():
@@ -16,7 +20,10 @@ def postNew():
 @app.route('/post/save', methods=['POST'])
 def postSave():
     formVals = request.form
-    return render_template('post/save.html', formVals = formVals)
+    postDao = PostDao()
+    post = postDao.mapDictToObject(formVals)
+    postDao.save(post)
+    return render_template('post/save.html', formVals = formVals, post = post)
 
 #errors
 @app.errorhandler(404)

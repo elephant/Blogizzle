@@ -1,0 +1,10 @@
+    <article>
+        <header>
+          <h1>{{post.title|default('post not found')}}</h1>
+          <address>{{post.author|default('anonymous')}} ({{post.email}})</address>
+          <p>Published on {{post.publishTime}}</p>
+        </header>
+        <section>
+            {{post.body|default('(blank)')}}
+        </section>
+    </article>
