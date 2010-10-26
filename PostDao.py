@@ -32,6 +32,7 @@ class PostDao:
 
     def mapDictToObject(self, dict):
         post = Post()
+        print dict
         try:
             if 'title' in dict:
                 post.title = dict['title']
@@ -44,7 +45,11 @@ class PostDao:
             if 'ip' in dict:
                 post.ip = dict['ip']
             if 'publishTime' in dict:
-                post.publishTime = dict['publishTime']
+                if isinstance(dict['publishTime'], unicode) or isinstance(dict['publishTime'], str):
+                    post.publishTime = datetime.strptime(dict['publishTime'], "%Y-%m-%d")
+                else:
+                    post.publishTime = dict['publishTime']
+            print dict['publishTime'].__class__
         except:
             post = Post()
         return post
