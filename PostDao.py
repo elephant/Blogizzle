@@ -19,35 +19,14 @@ class PostDao:
 
     def findOne(self):
         self.connect()
-        mongoPost = self.db.posts.find_one()
-        return self.mapDictToObject(mongoPost)
+        post = Post(self.db.posts.find_one())
+        return post
 
     def find(self, limit):
         self.connect()
         mongoPosts = self.db.posts.find(limit = limit)
         posts = []
         for mongoPost in mongoPosts:
-            posts.append(self.mapDictToObject(mongoPost))
+            post = Post(mongoPost)
+            posts.append(post)
         return posts
-
-    def mapDictToObject(self, dict):
-        post = Post()
-        try:
-            if 'title' in dict:
-                post.title = dict['title']
-            if 'body' in dict:
-                post.body = dict['body']
-            if 'author' in dict:
-                post.author = dict['author']
-            if 'email' in dict:
-                post.email = dict['email']
-            if 'ip' in dict:
-                post.ip = dict['ip']
-            if 'publishTime' in dict:
-                if isinstance(dict['publishTime'], unicode) or isinstance(dict['publishTime'], str):
-                    post.publishTime = datetime.strptime(dict['publishTime'], "%Y-%m-%d")
-                else:
-                    post.publishTime = dict['publishTime']
-        except:
-            post = Post()
-        return post

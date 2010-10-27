@@ -21,7 +21,8 @@ def postNew():
 def postSave():
     formVals = request.form
     postDao = PostDao()
-    post = postDao.mapDictToObject(formVals)
+    post = Post(formVals)
+    post.ensureDefaults()
     postDao.save(post)
     return render_template('post/save.html', formVals = formVals, post = post)
 
