@@ -10,8 +10,15 @@ app.logger.setLevel(logging.DEBUG)
 @app.route('/')
 def index():
     postDao = PostDao()
-    posts = postDao.find(5)
-    return render_template('index.html', message = "hello there", posts = posts)
+    posts = postDao.find()
+    page = 1
+    return render_template('index.html', posts = posts, page = page)
+
+@app.route('/page<int:page>')
+def page(page):
+    postDao = PostDao()
+    posts = postDao.find(page = page)
+    return render_template('index.html', posts = posts, page = page)
 
 @app.route('/post/new')
 def postNew():

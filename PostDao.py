@@ -22,9 +22,9 @@ class PostDao:
         post = Post(self.db.posts.find_one())
         return post
 
-    def find(self, limit):
+    def find(self, limit = 5, page = 1):
         self.connect()
-        mongoPosts = self.db.posts.find(limit = limit)
+        mongoPosts = self.db.posts.find(limit = limit, skip = (limit * (page - 1)))
         posts = []
         for mongoPost in mongoPosts:
             post = Post(mongoPost)
