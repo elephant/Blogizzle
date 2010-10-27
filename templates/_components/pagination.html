@@ -1,0 +1,14 @@
+<navigation>
+    <ul>
+        {% if posts.currentPage == 1 %}
+            <li class="previous"><del>Previous page</del></li>
+        {% else %}
+            <li class="previous"><a href="{{url_for('page', page = posts.currentPage - 1)}}">Previous page</a></li>
+        {% endif %}
+        {% if posts.currentPage == posts.totalPages %}
+            <li class="next"><del>Next page</del></li>
+        {% else %}
+            <li class="next"><a href="{{url_for('page', page = posts.currentPage + 1)}}">Next page</a></li>
+        {% endif %}
+    </ul>
+</navigation>

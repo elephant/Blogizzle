@@ -1,7 +1,9 @@
-from datetime import datetime
+import math
+
 import pymongo
-from pymongo import Connection
+
 from Post import Post
+from PostCollection import PostCollection
 
 class PostDao:
     """Retrieve posts"""
@@ -10,7 +12,7 @@ class PostDao:
         pass
 
     def connect(self):
-        self.connection = Connection()
+        self.connection = pymongo.Connection()
         self.db = self.connection.blogizzle
 
     def save(self, post):
@@ -25,8 +27,11 @@ class PostDao:
     def find(self, limit = 5, page = 1):
         self.connect()
         mongoPosts = self.db.posts.find(limit = limit, skip = (limit * (page - 1)))
-        posts = []
+        posts = PostCollection()
+        posts.length = mongoPosts.count()
+        posts.currentPage = page
+        posts.totalPages = (posts.length / limit) + (posts.length % limit)
         for mongoPost in mongoPosts:
             post = Post(mongoPost)
-            posts.append(post)
+            posts.add(post)
         return posts

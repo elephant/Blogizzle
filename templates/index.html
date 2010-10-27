@@ -5,13 +5,10 @@
     <link rel="stylesheet" type="text/css" href="/static/styles.css"/>
   </head>
   <body>
-    {% for post in posts %}
+    {{posts.currentPage}} of {{posts.totalPages}}
+    {% for post in posts.posts %}
         {% include '_components/post.html' %}
     {% endfor %}
-    <navigation>
-        <ul>
-            <li><a href="{{url_for('postNew')}}">New Post</a></li>
-        </ul>
-    </navigation>
+    {% include '_components/pagination.html' %}
   </body>
 </html>
