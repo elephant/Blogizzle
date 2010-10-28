@@ -1,5 +1,5 @@
 import logging
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, redirect
 from jinja2 import Markup
 import markdown2
 
@@ -29,9 +29,15 @@ def index():
 
 @app.route('/page<int:page>')
 def page(page):
-    postDao = PostDao()
-    posts = postDao.find(page = page)
-    return render_template('index.html', posts = posts, page = page, nextPageUrl = url_for('page', page = page + 1), previousPageUrl = url_for('page', page = page - 1))
+    if page < 2:
+        return redirect(url_for('index'), 301)
+    else:
+      postDao = PostDao()
+      posts = postDao.find(page = page)
+      if page > posts.totalPages:
+        return redirect(url_for('index'), 301)
+      else:
+        return render_template('index.html', posts = posts, page = page, nextPageUrl = url_for('page', page = page + 1), previousPageUrl = url_for('page', page = page - 1))
 
 @app.route('/post/new')
 def postNew():
@@ -49,7 +55,11 @@ def postSave():
 #errors
 @app.errorhandler(404)
 def page_not_found(error):
-    return render_template('error/404notFound.html')
+    return render_template('error/404notFound.html'), 404
+
+@app.errorhandler(500)
+def server_error(error):
+    return render_template('error/404notFound.html'), 404
 
 if __name__ == '__main__':
     app.run()

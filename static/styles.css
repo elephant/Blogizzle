@@ -21,6 +21,24 @@ img {
 
 header.title {
     text-align: center;
+    color: #645E95;
+}
+
+header.title h1 {
+    margin: 0pt;
+    padding: 0pt;
+}
+
+header.title address {
+    font-size: 9pt;
+}
+
+header.title address a {
+    color: #645E74;
+}
+
+header.title address a:visited {
+    color: #645E95;
 }
 
 navigation {
@@ -35,6 +53,7 @@ navigation p {
     padding: 0pt;
     position: relative;
     top: 2em;
+    display: inline;
 }
 
 navigation ul {

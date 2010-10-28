@@ -2,13 +2,11 @@
 <html>
   <head>
     <title>Blogizzle</title>
-    <link rel="stylesheet" type="text/css" href="/static/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css" />
+    <link rel="canonical" type="text/html" href="http://onomatizzle.com" />
   </head>
   <body>
-    <header class="title">
-        <h1>A blog, fo shizzle</h1>
-        <address>by <a href="http://jonathansuchland.com/">Jonathan Suchland</a></address>
-    </header>
+    {% include '_components/header.html' %}
     <section class="articles">
         {% for post in posts.posts %}
             {% include '_components/post.html' %}

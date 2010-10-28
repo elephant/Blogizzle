@@ -3,6 +3,8 @@
     <ul>
         {% if posts.currentPage == 1 %}
             <li class="previous"><del>Previous page</del></li>
+        {% elif posts.currentPage - 1 == 1 %}
+            <li class="previous"><a href="{{url_for('index')}}">Previous page</a></li>
         {% else %}
             <li class="previous"><a href="{{url_for('page', page = posts.currentPage - 1)}}">Previous page</a></li>
         {% endif %}
