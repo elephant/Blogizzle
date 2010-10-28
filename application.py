@@ -1,5 +1,7 @@
 import logging
 from flask import Flask, render_template, request, url_for
+from jinja2 import Markup
+import markdown2
 
 from Post import Post
 from PostCollection import PostCollection
@@ -8,6 +10,15 @@ from PostDao import PostDao
 app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 app.logger.setLevel(logging.DEBUG)
+
+def datetimeformat(value, format='%A, %B %d %I:%M %p %Z'):
+    return value.strftime(format)
+
+def markdown(value):
+    return Markup(markdown2.markdown(value))
+
+app.jinja_env.filters['datetimeformat'] = datetimeformat
+app.jinja_env.filters['markdown'] = markdown
 
 @app.route('/')
 def index():

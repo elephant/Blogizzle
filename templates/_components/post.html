@@ -2,9 +2,9 @@
         <header>
           <h1>{{post.title|default('post not found')}}</h1>
           <address>{{post.author|default('anonymous')}} ({{post.email}})</address>
-          <p>Published on {{post.publishTime}}</p>
+          <p>Published on {{post.publishTime|datetimeformat}}</p>
         </header>
         <section>
-            {{post.body|default('(blank)')}}
+            {{post.body|markdown}}
         </section>
     </article>

@@ -2,9 +2,7 @@ body {
     background: #000;
     color: #fff;
     font-family: courier,monospace;
-    width: 100%;
     height: 100%;
-    text-align: center;
 }
 a {
     color: rgb(210, 255, 255);
@@ -35,4 +33,21 @@ navigation li.previous {
 navigation li.next {
     float: right;
     padding-right: 10%;
+}
+
+article {
+    width: 80%;
+    margin: 10%;
+    border: 0;
+    display: block;
+}
+
+article header h1 {
+    color: yellow;
+}
+
+article header address, article header p {
+    margin: 0pt;
+    padding: 0pt;
+    font-size: 10pt;
 }
