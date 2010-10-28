@@ -1,7 +1,9 @@
     <article>
         <header>
           <h1>{{post.title|default('post not found')}}</h1>
-          <address>{{post.author|default('anonymous')}} ({{post.email}})</address>
+          {# note: not display the author/email, since I'm the only person writing
+              <address>{{post.author|default('anonymous')}} ({{post.email}})</address>
+          #}
           <p>Published on {{post.publishTime|datetimeformat}}</p>
         </header>
         <section>

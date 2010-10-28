@@ -5,10 +5,15 @@
     <link rel="stylesheet" type="text/css" href="/static/styles.css"/>
   </head>
   <body>
-    {{posts.currentPage}} of {{posts.totalPages}}
-    {% for post in posts.posts %}
-        {% include '_components/post.html' %}
-    {% endfor %}
-    {% include '_components/pagination.html' %}
+    <header class="title">
+        <h1>A blog, fo shizzle</h1>
+        <address>by <a href="http://jonathansuchland.com/">Jonathan Suchland</a></address>
+    </header>
+    <section class="articles">
+        {% for post in posts.posts %}
+            {% include '_components/post.html' %}
+        {% endfor %}
+        {% include '_components/pagination.html' %}
+    </section>
   </body>
 </html>

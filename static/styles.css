@@ -4,16 +4,37 @@ body {
     font-family: courier,monospace;
     height: 100%;
 }
+
 a {
     color: rgb(210, 255, 255);
 }
+
 a:visited {
     color: rgb(255, 255, 255);
 }
+
 img {
     -moz-box-shadow:5px  5px  5px  #321936;
     -webkit-box-shadow:5px  5px  5px  #321936;
     box-shadow:5px  5px  5px  #321936;
+}
+
+header.title {
+    text-align: center;
+}
+
+navigation {
+    display: block;
+    padding-left: 10%;
+    padding-right: 10%;
+    text-align: center;
+}
+
+navigation p {
+    margin: 0pt;
+    padding: 0pt;
+    position: relative;
+    top: 2em;
 }
 
 navigation ul {
@@ -27,12 +48,10 @@ navigation ul li {
 
 navigation li.previous {
     float: left;
-    padding-left: 10%;
 }
 
 navigation li.next {
     float: right;
-    padding-right: 10%;
 }
 
 article {
@@ -50,4 +69,8 @@ article header address, article header p {
     margin: 0pt;
     padding: 0pt;
     font-size: 10pt;
+}
+
+section.articles:nth-child(1) {
+    margin-top: 5%;
 }
