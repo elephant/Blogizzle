@@ -8,6 +8,7 @@ class Post:
     email = ""
     ip = ""
     publishTime = ""
+    publishDay = ""
 
     def __init__(self):
         self.title = ""
@@ -16,6 +17,7 @@ class Post:
         self.email = ""
         self.ip = ""
         self.publishTime = datetime.today()
+        self.publishDay = self.publishTime.strftime("%Y%m%d")
 
     def __init__(self, dictionary):
         if isinstance(dictionary, dict):
@@ -37,6 +39,7 @@ class Post:
                         self.publishTime = dictionary['publishTime']
                 except:
                     self.publishTime = datetime.today()
+            self.publishDay = self.publishTime.strftime("%Y%m%d")
 
     def ensureDefaults(self):
         if self.publishTime == "":
