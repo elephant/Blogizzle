@@ -1,4 +1,4 @@
-<navigation>
+<nav>
     <p>Page {{posts.currentPage}} of {{posts.totalPages}}</p>
     <ul>
         {% if posts.currentPage == 1 %}
@@ -14,4 +14,4 @@
             <li class="next"><a href="{{url_for('page', page = posts.currentPage + 1)}}">Next page</a></li>
         {% endif %}
     </ul>
-</navigation>
+</nav>
