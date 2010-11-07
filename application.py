@@ -1,5 +1,6 @@
 import logging
-from flask import Flask, render_template, request, url_for, redirect
+from datetime import datetime
+from flask import Flask, render_template, request, url_for, redirect, session
 from jinja2 import Markup
 import markdown2
 
@@ -10,6 +11,7 @@ from PostDao import PostDao
 app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 app.logger.setLevel(logging.DEBUG)
+app.secret_key = "\x81\x8e\xf7\xdbF\xc7\xc2\x89\xbd:\xdaW\x9e\x12\x8e\xb2\x14\xf0\x14\xde\x08\x0e\x9a\x82"
 
 def datetimeformat(value, format='%A, %B %d %I:%M %p %Z'):
     return value.strftime(format)
@@ -41,11 +43,15 @@ def page(page):
 
 @app.route('/post/new')
 def postNew():
-    return render_template('post/new.html')
+    today = datetime.today()
+    return render_template('post/new.html', today = today)
 
 @app.route('/post/save', methods=['POST'])
 def postSave():
+    app.open_session(request)
     formVals = request.form
+    session['email'] = formVals['email']
+    session['author'] = formVals['author']
     postDao = PostDao()
     post = Post(formVals)
     post.ensureDefaults()

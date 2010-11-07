@@ -10,13 +10,13 @@
         <fieldset>
             <legend>Post</legend>
             <input type="text" name="title" placeholder="Title" required="required" />
-            <input type="date" name="publishTime" required="required" placeholder="Publish Date" />
+            <input type="datetime-local" name="publishTime" required="required" placeholder="Publish Date/Time ({{today|datetimeformat('%Y-%m-%dT%H:%M:%S')}})" min="{{today|datetimeformat('%Y-%m-%dT%H:%M:%S')}}" />
             <textarea name="body"></textarea>
         </fieldset>
         <fieldset>
             <legend>Author</legend>
-            <input type="text" name="author" placeholder="Name" required="required" />
-            <input type="email" name="email" placeholder="Email Address" required="required" />
+            <input type="text" name="author" placeholder="Name" required="required" value="{{session['author']}}" />
+            <input type="email" name="email" placeholder="Email Address" required="required" value="{{session['email']}}" />
         </fieldset>
         <button type="submit">Save</button>
     </form>

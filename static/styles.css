@@ -1,6 +1,6 @@
 body {
-    background: #000;
-    color: #fff;
+    background: black;
+    color: white;
     font-family: courier,monospace;
     height: 100%;
 }
@@ -19,6 +19,18 @@ img {
     box-shadow:5px  5px  5px  #321936;
 }
 
+h1 {
+    font-size: 18pt;
+}
+
+h2 {
+    font-size: 16pt;
+}
+
+h3, h4, h5 {
+    font-size: 14pt;
+}
+
 header.title {
     text-align: center;
     color: #645E95;
@@ -27,6 +39,7 @@ header.title {
 header.title h1 {
     margin: 0pt;
     padding: 0pt;
+    font-size: 20pt;
 }
 
 header.title address {
@@ -92,4 +105,44 @@ article header address, article header p {
 
 section.articles:nth-child(1) {
     margin-top: 5%;
+}
+
+legend {
+    color: yellow;
+}
+
+textarea {
+    display: block;
+    margin-top: 1em;
+    height: 25em;
+    width: 100%
+}
+
+input, textarea {
+    color: white;
+    background: black;
+    border: thin dashed gray;
+    font-family: courier,monospace;
+    font-size: 12pt;
+}
+
+input[name="title"] {
+    font-size: 16pt;
+    width: 30em;
+    color: yellow;
+    font-size: 20pt;
+    font-weight: bold;
+}
+
+input[type="datetime-local"] {
+    width: 20em;
+    margin-top:0.5em;
+}
+
+input[name="author"], input[type="email"] {
+    width: 20em;
+}
+
+button {
+    margin-top: 1em;
 }
