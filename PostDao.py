@@ -23,7 +23,7 @@ class PostDao:
         return post
 
     def find(self, limit = 5, page = 1):
-        mongoPosts = self.db.posts.find(limit = limit, skip = (limit * (page - 1))).sort("publishDay")
+        mongoPosts = self.db.posts.find(limit = limit, skip = (limit * (page - 1))).sort("publishTime", -1)
         posts = PostCollection()
         posts.length = mongoPosts.count()
         posts.currentPage = page
