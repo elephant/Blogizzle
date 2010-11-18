@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 
 class Post:
@@ -9,6 +10,7 @@ class Post:
     ip = ""
     publishTime = ""
     publishDay = ""
+    slug = ""
 
     def __init__(self):
         self.title = ""
@@ -18,6 +20,7 @@ class Post:
         self.ip = ""
         self.publishTime = datetime.today()
         self.publishDay = self.publishTime.strftime("%Y%m%d")
+        self.slug = ""
 
     def __init__(self, dictionary):
         if isinstance(dictionary, dict):
@@ -40,6 +43,10 @@ class Post:
                 except:
                     self.publishTime = datetime.today()
             self.publishDay = self.publishTime.strftime("%Y%m%d")
+            if 'slug' in dictionary:
+                self.ip = dictionary['slug']
+            else:
+                self.slug = re.sub(r"[^a-zA-Z0-9]", "-", self.title) + "-" + self.publishDay
 
     def ensureDefaults(self):
         if self.publishTime == "":
