@@ -3,6 +3,7 @@ body {
     color: white;
     font-family: courier,monospace;
     height: 100%;
+    margin: 0;
 }
 
 a {
@@ -32,6 +33,7 @@ h3, h4, h5 {
 }
 
 header.title {
+    background: white;
     text-align: center;
     color: #645E95;
 }

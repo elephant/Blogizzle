@@ -29,6 +29,12 @@ def index():
     page = 1
     return render_template('index.html', posts = posts, page = page, nextPageUrl = url_for('page', page = page + 1), previousPageUrl = url_for('page', page = page - 1))
 
+@app.route('/<slug>.html')
+def read(slug):
+    postDao = PostDao()
+    post = postDao.findOne(slug)
+    return render_template('post.html', post = post)
+
 @app.route('/page<int:page>')
 def page(page):
     if page < 2:
@@ -68,4 +74,5 @@ def server_error(error):
     return render_template('error/404notFound.html'), 404
 
 if __name__ == '__main__':
+    app.debug = True
     app.run()

@@ -1,6 +1,6 @@
     <article>
         <header>
-          <h1>{{post.title|default('post not found')}}</h1>
+          <h1><a href="{{url_for('read', slug = post.slug)}}">{{post.title|default('post not found')}}</a></h1>
           {# note: not display the author/email, since I'm the only person writing
               <address>{{post.author|default('anonymous')}} ({{post.email}})</address>
           #}

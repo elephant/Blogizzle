@@ -9,6 +9,7 @@ class Post:
     ip = ""
     publishTime = ""
     publishDay = ""
+    slug = ""
 
     def __init__(self):
         self.title = ""
@@ -18,6 +19,7 @@ class Post:
         self.ip = ""
         self.publishTime = datetime.today()
         self.publishDay = self.publishTime.strftime("%Y%m%d")
+        self.slug = ""
 
     def __init__(self, dictionary):
         if isinstance(dictionary, dict):
@@ -40,6 +42,7 @@ class Post:
                 except:
                     self.publishTime = datetime.today()
             self.publishDay = self.publishTime.strftime("%Y%m%d")
+            self.slug = self.publishTime.strftime("%Y-%m-%d") + self.title.lower().replace(" ", "-")
 
     def ensureDefaults(self):
         if self.publishTime == "":

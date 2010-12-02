@@ -18,8 +18,8 @@ class PostDao:
     def save(self, post):
         self.db.posts.save(post.__dict__)
 
-    def findOne(self):
-        post = Post(self.db.posts.find_one())
+    def findOne(self, slug = ""):
+        post = Post(self.db.posts.find_one({"slug": slug}))
         return post
 
     def find(self, limit = 5, page = 1):
