@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from CommentCollection import CommentCollection
+
 class Post:
     """A post"""
     title = ""
@@ -10,6 +12,8 @@ class Post:
     publishTime = ""
     publishDay = ""
     slug = ""
+    comments = CommentCollection()
+    commentCount = 0
 
     def __init__(self):
         self.title = ""
@@ -20,6 +24,8 @@ class Post:
         self.publishTime = datetime.today()
         self.publishDay = self.publishTime.strftime("%Y%m%d")
         self.slug = ""
+        self.comments = CommentCollection()
+        self.commentCount = 0
 
     def __init__(self, dictionary):
         if isinstance(dictionary, dict):
@@ -33,6 +39,8 @@ class Post:
                 self.email = dictionary['email']
             if 'ip' in dictionary:
                 self.ip = dictionary['ip']
+            if 'commentCount' in dictionary:
+                self.commentCount = int(dictionary['commentCount'])
             if 'publishTime' in dictionary:
                 try:
                     if isinstance(dictionary['publishTime'], unicode) or isinstance(dictionary['publishTime'], str):
@@ -41,8 +49,11 @@ class Post:
                         self.publishTime = dictionary['publishTime']
                 except:
                     self.publishTime = datetime.today()
-            self.publishDay = self.publishTime.strftime("%Y%m%d")
-            self.slug = self.publishTime.strftime("%Y-%m-%d") + self.title.lower().replace(" ", "-")
+            self.publishDay = int(self.publishTime.strftime("%Y%m%d"))
+            self.slug = self.publishTime.strftime("%Y.%b") + "-" + self.title.lower().replace(" ", "-")
+            if 'comments' in dictionary:
+                del self.comments[:]
+                self.comments.appendAll(dictionary['comments'])
 
     def ensureDefaults(self):
         if self.publishTime == "":

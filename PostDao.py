@@ -2,6 +2,8 @@ import math
 
 import pymongo
 
+from Comment import Comment
+from CommentCollection import CommentCollection
 from Post import Post
 from PostCollection import PostCollection
 
@@ -18,12 +20,16 @@ class PostDao:
     def save(self, post):
         self.db.posts.save(post.__dict__)
 
+    def saveComment(self, comment, slug):
+        self.db.posts.update({"slug": slug}, {"$push": {"comments": comment.__dict__}, "$inc": {"commentCount": 1}})
+
     def findOne(self, slug = ""):
         post = Post(self.db.posts.find_one({"slug": slug}))
         return post
 
     def find(self, limit = 5, page = 1):
-        mongoPosts = self.db.posts.find(limit = limit, skip = (limit * (page - 1))).sort("publishTime", -1)
+        fields = ['author', 'body', 'email', 'publishTime', 'slug', 'title', 'commentCount']
+        mongoPosts = self.db.posts.find(limit = limit, skip = (limit * (page - 1)), fields = fields).sort("publishTime", -1)
         posts = PostCollection()
         posts.length = mongoPosts.count()
         posts.currentPage = page
@@ -34,5 +40,5 @@ class PostDao:
 
         for mongoPost in mongoPosts:
             post = Post(mongoPost)
-            posts.add(post)
+            posts.append(post)
         return posts

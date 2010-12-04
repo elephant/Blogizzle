@@ -1,0 +1,12 @@
+    <form method="post" action="{{url_for('commentSave', slug = post.slug)}}">
+        <fieldset>
+            <legend>Your info</legend>
+            <input type="text" name="author" placeholder="Name" required="required" value="{{session['author']}}" />
+            <input type="email" name="email" placeholder="Email Address" required="required" value="{{session['email']}}" />
+        </fieldset>
+        <fieldset>
+            <legend>Comment</legend>
+            <textarea name="body"></textarea>
+        </fieldset>
+        <button type="submit">Post comment</button>
+    </form>

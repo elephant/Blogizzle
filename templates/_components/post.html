@@ -1,12 +1,25 @@
     <article>
         <header>
-          <h1><a href="{{url_for('read', slug = post.slug)}}">{{post.title|default('post not found')}}</a></h1>
+          <h1><a href="{{url_for('read', slug = post.slug)}}" rel="permalink">{{post.title|default('post not found')}}</a></h1>
           {# note: not display the author/email, since I'm the only person writing
               <address>{{post.author|default('anonymous')}} ({{post.email}})</address>
           #}
-          <p>Published on {{post.publishTime|datetimeformat}}</p>
+          <p><a href="{{url_for('read', slug = post.slug)}}#comments" rel="comments">{{post.commentCount}} Comments</a> | Published on {{post.publishTime|datetimeformat}}</p>
         </header>
-        <section>
+        <section class="body">
             {{post.body|markdown}}
         </section>
+        {% if post.comments %}
+          <section id="comments">
+              <h5>Comments</h5>
+              <ol>
+              {% for comment in post.comments %}
+                <li>
+                    <p>{{ comment.author }}:{#comment.publishTime|datetimeformat#}</p>
+                    <p>{{ comment.body }}</p>
+                </li>
+              {% endfor %}
+              </ol>
+          </section>
+        {% endif %}
     </article>

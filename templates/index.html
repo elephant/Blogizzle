@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Blogizzle</title>
+    <title>A Blog, by Jonathan Suchland</title>
     <link rel="stylesheet" type="text/css" href="/static/styles.css" />
     <link rel="canonical" type="text/html" href="http://onomatizzle.com" />
   </head>
   <body>
     {% include '_components/header.html' %}
     <section class="articles">
-        {% for post in posts.posts %}
+        {% for post in posts %}
             {% include '_components/post.html' %}
         {% endfor %}
     </section>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Blogizzle</title>
+    <title>{{post.title}} ({{post.publishTime|datetimeformat}})</title>
     <link rel="stylesheet" type="text/css" href="/static/styles.css" />
     <link rel="canonical" type="text/html" href="http://onomatizzle.com" />
   </head>
@@ -9,6 +9,10 @@
     {% include '_components/header.html' %}
     <section class="articles">
         {% include '_components/post.html' %}
+    </section>
+    <section>
+      <h5>Post a comment</h5>
+      {% include '_components/forms/comment.html' %}
     </section>
   </body>
 </html>
