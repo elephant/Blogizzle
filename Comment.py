@@ -9,14 +9,7 @@ class Comment:
     publishTime = ""
     slug = ""
 
-    def __init__(self):
-        self.body = ""
-        self.author = ""
-        self.email = ""
-        self.ip = ""
-        self.publishTime = datetime.today()
-
-    def __init__(self, dictionary):
+    def __init__(self, dictionary = ""):
         self.ensureDefaults()
         if isinstance(dictionary, dict):
             if 'body' in dictionary:
@@ -29,6 +22,12 @@ class Comment:
                 self.ip = dictionary['ip']
             if 'publishTime' in dictionary:
                 self.publishTime = dictionary['publishTime']
+        else:
+            self.body = ""
+            self.author = ""
+            self.email = ""
+            self.ip = ""
+            self.publishTime = datetime.today()
 
     def ensureDefaults(self):
         if self.publishTime == "":

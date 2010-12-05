@@ -20,11 +20,12 @@ img {
     box-shadow:5px  5px  5px  #321936;
 }
 
-h1, h2, h3, h4, h5 {
-    color: rgb(210, 255, 255);
+h2, h3, h4, h5 {
+    color: rgb(210, 255, 210);
 }
 
 h1 {
+    color: rgb(210, 255, 255);
     font-size: 18pt;
 }
 
@@ -142,12 +143,25 @@ section#postComment {
     display: block;
 }
 
-span.time {
+span.time, p.asterisk {
     color: gray;
+}
+
+.error {
+    color: red;
 }
 
 legend {
     color: yellow;
+}
+
+label {
+    white-space: nowrap;
+    width: 26em;
+}
+
+button {
+    margin-top: 1em;
 }
 
 textarea {
@@ -180,8 +194,4 @@ input[type="datetime-local"] {
 
 input[name="author"], input[type="email"] {
     width: 20em;
-}
-
-button {
-    margin-top: 1em;
 }

@@ -1,8 +1,9 @@
 import logging
+import re
 from datetime import datetime
 from hashlib import md5
 
-from flask import Flask, render_template, request, url_for, redirect, session, g
+from flask import Flask, render_template, request, url_for, redirect, session, g, flash
 from jinja2 import Markup, environmentfilter, evalcontextfilter
 import markdown2
 
@@ -35,21 +36,31 @@ def page(page):
 
 @app.route('/<slug>.html', methods=['GET'])
 def read(slug):
+    comment = Comment()
     post = g.postDao.findOne(slug)
-    return render_template('post.html', post = post)
+    return render_template('post.html', post = post, comment = comment)
 
 @app.route('/<slug>.html', methods=['POST'])
 def commentSave(slug):
     app.open_session(request)
     formVals = request.form
-    session['email'] = formVals['email']
-    session['author'] = formVals['author']
-
     comment = Comment(formVals)
-    comment.ensureDefaults()
-    g.postDao.saveComment(comment, slug)
+    comment.body = Markup(comment.body).striptags()
+
+    if formVals['email'] and formVals['author'] and formVals['body'] and len(formVals['body']) > 10:
+        emailRegex = re.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(?:[a-zA-Z]{2}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)$")
+        if emailRegex.match(formVals['email']):
+            session['email'] = formVals['email']
+            session['author'] = formVals['author']
+            comment.ensureDefaults()
+            g.postDao.saveComment(comment, slug)
+            comment.body = ""
+        else:
+            flash("The email address you entered, '%s', is invalid." % formVals['email'], category='error')
+    else:
+        flash("You must enter your name, email address, and some text to post a comment.", category='error')
     post = g.postDao.findOne(slug)
-    return render_template('post.html', post = post)
+    return render_template('post.html', post = post, comment = comment)
 
 @app.route('/post')
 def postNew():

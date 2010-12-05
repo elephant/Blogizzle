@@ -1,12 +1,24 @@
-    <form method="post" action="{{url_for('commentSave', slug = post.slug)}}">
+    {% with messages = get_flashed_messages(with_categories = true) %}
+        {% if messages %}
+        <div class="messages">
+            <ul>
+                {% for category, message in messages %}
+                <li class="{{category}}">{{message}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    {% endwith %}
+    <form method="post" action="{{url_for('commentSave', slug = post.slug)}}#comments">
         <fieldset>
             <legend>Your info</legend>
-            <input type="text" name="author" placeholder="Name" required="required" value="{{session['author']}}" />
-            <input type="email" name="email" placeholder="Email Address" required="required" value="{{session['email']}}" />
+            <label>Name <input type="text" name="author" placeholder="Jonny Appleseed" required="required" value="{{session['author']|default(comment.author)}}" /></label>
+            <label>Email <input type="email" name="email" placeholder="jonny@appleseed.com" required="required" value="{{session['email']|default(comment.email)}}" /></label>
         </fieldset>
         <fieldset>
             <legend>Comment</legend>
-            <textarea name="body"></textarea>
+            <textarea name="body">{{comment.body}}</textarea>
+            <p class="asterisk">* HTML will be stripped from your comment.</p>
         </fieldset>
         <button type="submit">Post comment</button>
     </form>

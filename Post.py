@@ -15,19 +15,7 @@ class Post:
     comments = CommentCollection()
     commentCount = 0
 
-    def __init__(self):
-        self.title = ""
-        self.body = ""
-        self.author = ""
-        self.email = ""
-        self.ip = ""
-        self.publishTime = datetime.today()
-        self.publishDay = self.publishTime.strftime("%Y%m%d")
-        self.slug = ""
-        self.comments = CommentCollection()
-        self.commentCount = 0
-
-    def __init__(self, dictionary):
+    def __init__(self, dictionary = ""):
         if isinstance(dictionary, dict):
             if 'title' in dictionary:
                 self.title = dictionary['title']
@@ -56,6 +44,17 @@ class Post:
                 self.comments.appendAll(dictionary['comments'])
             else:
                 self.comments = CommentCollection()
+        else:
+            self.title = ""
+            self.body = ""
+            self.author = ""
+            self.email = ""
+            self.ip = ""
+            self.publishTime = datetime.today()
+            self.publishDay = self.publishTime.strftime("%Y%m%d")
+            self.slug = ""
+            self.comments = CommentCollection()
+            self.commentCount = 0
 
     def ensureDefaults(self):
         if self.publishTime == "":

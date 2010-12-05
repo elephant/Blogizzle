@@ -4,7 +4,7 @@
               {% for comment in post.comments %}
                 <li>
                     <p class="by"><img src="{{comment.email|gravatar(20)}}" height="20" width="20" alt="{{ comment.author }} gravatar" /> <span class="author">{{ comment.author }}</span>: <span class="time">{{comment.publishTime|datetimeformat}}</span></p>
-                    <p>{{ comment.body }}</p>
+                    <p>{{ comment.body|markdown }}</p>
                 </li>
               {% endfor %}
               </ol>
