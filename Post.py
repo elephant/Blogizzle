@@ -54,6 +54,8 @@ class Post:
             if 'comments' in dictionary:
                 del self.comments[:]
                 self.comments.appendAll(dictionary['comments'])
+            else:
+                self.comments = CommentCollection()
 
     def ensureDefaults(self):
         if self.publishTime == "":
