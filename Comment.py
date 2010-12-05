@@ -27,6 +27,8 @@ class Comment:
                 self.email = dictionary['email']
             if 'ip' in dictionary:
                 self.ip = dictionary['ip']
+            if 'publishTime' in dictionary:
+                self.publishTime = dictionary['publishTime']
 
     def ensureDefaults(self):
         if self.publishTime == "":

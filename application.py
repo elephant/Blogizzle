@@ -1,5 +1,7 @@
 import logging
 from datetime import datetime
+from hashlib import md5
+
 from flask import Flask, render_template, request, url_for, redirect, session, g
 from jinja2 import Markup, environmentfilter, evalcontextfilter
 import markdown2
@@ -95,8 +97,14 @@ def datetimeformat(value, format='%A, %B %d %I:%M %p %Z'):
 def markdown(value):
     return Markup(markdown2.markdown(value))
 
+def gravatar(email, size=80):
+    """Return the gravatar image for the given email address."""
+    return 'http://www.gravatar.com/avatar/%s?d=identicon&s=%d' % \
+        (md5(email.strip().lower().encode('utf-8')).hexdigest(), size)
+
 app.jinja_env.filters['datetimeformat'] = datetimeformat
 app.jinja_env.filters['markdown'] = markdown
+app.jinja_env.filters['gravatar'] = gravatar
 
 
 ########## Debug app - local development server
