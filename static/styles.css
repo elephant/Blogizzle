@@ -20,6 +20,10 @@ img {
     box-shadow:5px  5px  5px  #321936;
 }
 
+h1, h2, h3, h4, h5 {
+    color: rgb(210, 255, 255);
+}
+
 h1 {
     font-size: 18pt;
 }
@@ -32,7 +36,7 @@ h3, h4, h5 {
     font-size: 14pt;
 }
 
-header.title {
+header.title, body footer {
     background: white;
     text-align: center;
     color: #645E95;
@@ -59,6 +63,15 @@ header.title address a {
 
 header.title address a:visited {
     color: #645E95;
+}
+
+body footer {
+    position: relative;
+    top: 2em;
+}
+
+body footer a, body footer a:visited {
+    color: red;
 }
 
 nav {
@@ -112,6 +125,25 @@ article header address, article header p {
 
 section.articles:nth-child(1) {
     margin-top: 5%;
+}
+
+section.article header a, section.article header a:visited {
+    text-decoration: none;
+    color: rgb(210, 255, 255);
+}
+
+section#comments p.by {
+    font-size: 10pt;
+}
+
+section#postComment {
+    margin: 10%;
+    width: 80%;
+    display: block;
+}
+
+span.time {
+    color: gray;
 }
 
 legend {

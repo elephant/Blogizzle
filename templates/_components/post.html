@@ -4,23 +4,19 @@
           {# note: not display the author/email, since I'm the only person writing
               <address>{{post.author|default('anonymous')}} ({{post.email}})</address>
           #}
-          <p><a href="{{url_for('read', slug = post.slug)}}#comments" rel="comments">{{post.commentCount}} Comments</a> | Published on {{post.publishTime|datetimeformat}}</p>
+          <p>
+            {% if post.commentCount > 0 %}
+                <a href="{{url_for('read', slug = post.slug)}}#comments" rel="comments">{{post.commentCount}} comments</a> | <span class="time">Published on {{post.publishTime|datetimeformat}}</span>
+            {% else %}
+                <a href="{{url_for('read', slug = post.slug)}}#comments" rel="comments">Post a comment</a> | <span class="time">Published on {{post.publishTime|datetimeformat}}</span>
+            {% endif %}
+          </p>
         </header>
         <section class="body">
             {{post.body|markdown}}
         </section>
         {% if post.comments %}
-          <section id="comments">
-              <h5>Comments</h5>
-              <ol>
-              {% for comment in post.comments %}
-                <li>
-                    <p><img src="{{comment.email|gravatar(20)}}" height="20" width="20" alt="{{ comment.author }} gravatar" /> <span class="author">{{ comment.author }}</span>: <span class="time">{{comment.publishTime|datetimeformat}}</span></p>
-                    <p>{{ comment.body }}</p>
-                </li>
-              {% endfor %}
-              </ol>
-          </section>
+            {% include '_components/comments.html' %}
         {% else %}
           <a name="comments"></a>
         {% endif %}
