@@ -195,3 +195,18 @@ input[type="datetime-local"] {
 input[name="author"], input[type="email"] {
     width: 20em;
 }
+
+
+
+code {
+    display: block;
+    width: 90%;
+    padding: 1em 0 1em 1em;
+    background: lightgrey;
+    color: black;
+    border: dotted 1px #FFFFFF;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin-left: 2em;
+}

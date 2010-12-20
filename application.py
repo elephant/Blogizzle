@@ -5,7 +5,7 @@ from hashlib import md5
 
 from flask import Flask, render_template, request, url_for, redirect, session, g, flash
 from jinja2 import Markup, environmentfilter, evalcontextfilter
-import markdown2
+import markdown
 
 from Post import Post
 from Comment import Comment
@@ -71,13 +71,19 @@ def postNew():
 def postSave():
     app.open_session(request)
     formVals = request.form
+    comment = Comment()
     session['email'] = formVals['email']
     session['author'] = formVals['author']
     postDao = PostDao()
     post = Post(formVals)
     post.ensureDefaults()
-    g.postDao.save(post)
-    return render_template('post.html', post = post)
+    try:
+        g.postDao.save(post)
+        flash("Saved")
+        return redirect(url_for('read', slug = post.slug))
+    except:
+        flash("Uh oh", category = "error")
+        return render_template('post.html', post = post, comment = comment)
 
 ########## Common Application Functionality
 #errors
@@ -105,8 +111,8 @@ def after_request(response):
 def datetimeformat(value, format='%A, %B %d %I:%M %p %Z'):
     return value.strftime(format)
 
-def markdown(value):
-    return Markup(markdown2.markdown(value))
+def markdown2html(value):
+    return Markup(markdown.markdown(value))
 
 def gravatar(email, size=80):
     """Return the gravatar image for the given email address."""
@@ -114,7 +120,7 @@ def gravatar(email, size=80):
         (md5(email.strip().lower().encode('utf-8')).hexdigest(), size)
 
 app.jinja_env.filters['datetimeformat'] = datetimeformat
-app.jinja_env.filters['markdown'] = markdown
+app.jinja_env.filters['markdown2html'] = markdown2html
 app.jinja_env.filters['gravatar'] = gravatar
 
 
