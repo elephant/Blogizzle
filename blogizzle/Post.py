@@ -1,61 +1,31 @@
 from datetime import datetime
 
-from CommentCollection import CommentCollection
+from mongoengine import DateTimeField, Document, EmbeddedDocumentField, IntField, ObjectIdField, SortedListField, StringField, URLField
 
-class Post:
+from Comment import Comment
+
+class Post(Document):
     """A post"""
-    title = ""
-    body = ""
-    author = ""
-    email = ""
-    ip = ""
-    publishTime = ""
-    publishDay = ""
-    slug = ""
-    comments = CommentCollection()
-    commentCount = 0
+    _id = ObjectIdField()
+    title = StringField(required=True)
+    body = StringField(required=True)
+    ip = StringField(required=True, regex="\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")
+    publishTime = DateTimeField(default=datetime.now)
+    publishDay = IntField(required=True) #YYYYMMDD used for quick searching/cache optimization
+    slug = StringField(required=True, unique=True)
+    #comments = SortedListField(EmbeddedDocumentField(Comment))
+    commentCount = IntField(min_value=0)
 
-    def __init__(self, dictionary = ""):
-        if isinstance(dictionary, dict):
-            if 'title' in dictionary:
-                self.title = dictionary['title']
-            if 'body' in dictionary:
-                self.body = dictionary['body']
-            if 'author' in dictionary:
-                self.author = dictionary['author']
-            if 'email' in dictionary:
-                self.email = dictionary['email']
-            if 'ip' in dictionary:
-                self.ip = dictionary['ip']
-            if 'commentCount' in dictionary:
-                self.commentCount = int(dictionary['commentCount'])
-            if 'publishTime' in dictionary:
-                try:
-                    if isinstance(dictionary['publishTime'], unicode) or isinstance(dictionary['publishTime'], str):
-                        self.publishTime = datetime.strptime(dictionary['publishTime'], "%Y-%m-%d")
-                    else:
-                        self.publishTime = dictionary['publishTime']
-                except:
-                    self.publishTime = datetime.today()
-            self.publishDay = int(self.publishTime.strftime("%Y%m%d"))
+    def addComment(self, comment):
+        if isinstance(comment, Comment):
+            self.comments.append(comment)
+            commentCount += 1 #({"slug": slug}, {"$push": {"comments": comment}, "$inc": {"commentCount": 1}})
+
+    def save(self, safe=True, force_insert=False, validate=True):
+        if self.publishTime is None:
+            self.publishTime = datetime.now
+        if self.slug is None:
             self.slug = self.publishTime.strftime("%Y.%b") + "-" + self.title.lower().replace(" ", "-")
-            if 'comments' in dictionary:
-                del self.comments[:]
-                self.comments.appendAll(dictionary['comments'])
-            else:
-                self.comments = CommentCollection()
-        else:
-            self.title = ""
-            self.body = ""
-            self.author = ""
-            self.email = ""
-            self.ip = ""
-            self.publishTime = datetime.today()
-            self.publishDay = self.publishTime.strftime("%Y%m%d")
-            self.slug = ""
-            self.comments = CommentCollection()
-            self.commentCount = 0
-
-    def ensureDefaults(self):
-        if self.publishTime == "":
-            self.publishTime = datetime.today()
+        if self.publishDay is None:
+            self.publishDay = int(self.publishTime.strftime("%Y%m%d"))
+        Document.save(self, safe=safe, force_insert=force_insert, validate=validate)
