@@ -7,11 +7,9 @@ from flask import Flask, render_template, request, url_for, redirect, session, g
 from jinja2 import Markup, environmentfilter, evalcontextfilter
 import markdown
 
-from Post import Post
-from Comment import Comment
-from CommentCollection import CommentCollection
-from PostCollection import PostCollection
-from PostDao import PostDao
+from mongoengine import connect
+
+from blogizzle import *
 
 app = Flask(__name__)
 app.secret_key = "\x81\x8e\xf7\xdbF\xc7\xc2\x89\xbd:\xdaW\x9e\x12\x8e\xb2\x14\xf0\x14\xde\x08\x0e\x9a\x82"
@@ -19,7 +17,7 @@ app.secret_key = "\x81\x8e\xf7\xdbF\xc7\xc2\x89\xbd:\xdaW\x9e\x12\x8e\xb2\x14\xf
 ########## Routes
 @app.route('/')
 def index():
-    posts = g.postDao.find()
+    posts = Post.objects
     page = 1
     return render_template('index.html', posts = posts, page = page, nextPageUrl = url_for('page', page = page + 1), previousPageUrl = url_for('page', page = page - 1))
 
@@ -70,20 +68,14 @@ def postNew():
 @app.route('/post', methods=['POST'])
 def postSave():
     app.open_session(request)
-    formVals = request.form
-    comment = Comment()
-    session['email'] = formVals['email']
-    session['author'] = formVals['author']
-    postDao = PostDao()
-    post = Post(formVals)
-    post.ensureDefaults()
+    post = Post(request.form)
     try:
-        g.postDao.save(post)
+        post.save(post)
         flash("Saved")
         return redirect(url_for('read', slug = post.slug))
     except:
         flash("Uh oh", category = "error")
-        return render_template('post.html', post = post, comment = comment)
+        return render_template('post.html', post = post)
 
 ########## Common Application Functionality
 #errors
