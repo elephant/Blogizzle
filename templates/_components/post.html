@@ -1,14 +1,11 @@
     <article>
         <header>
           <h1><a href="{{url_for('read', slug = post.slug)}}" rel="permalink">{{post.title|default('post not found')}}</a></h1>
-          {# note: not display the author/email, since I'm the only person writing
-              <address>{{post.author|default('anonymous')}} ({{post.email}})</address>
-          #}
           <p>
-            {% if post.commentCount > 0 %}
-                <a href="{{url_for('read', slug = post.slug)}}#comments" rel="comments">{{post.commentCount}} comments</a> | <span class="time">Published on {{post.publishTime|datetimeformat}}</span>
+            {% if post.comment_count > 0 %}
+                <a href="{{url_for('read', slug = post.slug)}}#comments" rel="comments">{{post.comment_count}} comments</a> | <span class="time">Published on {{post.publish_time|datetimeformat}}</span>
             {% else %}
-                <a href="{{url_for('read', slug = post.slug)}}#comments" rel="comments">Post a comment</a> | <span class="time">Published on {{post.publishTime|datetimeformat}}</span>
+                <a href="{{url_for('read', slug = post.slug)}}#comments" rel="comments">Post a comment</a> | <span class="time">Published on {{post.publish_time|datetimeformat}}</span>
             {% endif %}
           </p>
         </header>

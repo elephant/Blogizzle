@@ -9,7 +9,8 @@ import markdown
 
 from mongoengine import connect
 
-from blogizzle import *
+from blogizzle.Post import Post
+from blogizzle.Comment import Comment
 
 app = Flask(__name__)
 app.secret_key = "\x81\x8e\xf7\xdbF\xc7\xc2\x89\xbd:\xdaW\x9e\x12\x8e\xb2\x14\xf0\x14\xde\x08\x0e\x9a\x82"
@@ -19,23 +20,23 @@ app.secret_key = "\x81\x8e\xf7\xdbF\xc7\xc2\x89\xbd:\xdaW\x9e\x12\x8e\xb2\x14\xf
 def index():
     posts = Post.objects
     page = 1
-    return render_template('index.html', posts = posts, page = page, nextPageUrl = url_for('page', page = page + 1), previousPageUrl = url_for('page', page = page - 1))
+    return render_template('index.html', posts = posts, page = page, total_pages = Post.total_pages, nextPageUrl = url_for('page', page = page + 1), previousPageUrl = url_for('page', page = page - 1))
 
 @app.route('/page<int:page>')
 def page(page):
     if page < 2:
         return redirect(url_for('index'), 301)
     else:
-      posts = g.postDao.find(page = page)
-      if page > posts.totalPages:
+      if page > Post.total_pages:
         return redirect(url_for('index'), 301)
       else:
-        return render_template('index.html', posts = posts, page = page, nextPageUrl = url_for('page', page = page + 1), previousPageUrl = url_for('page', page = page - 1))
+        posts = Post.posts_by_page(page)
+        return render_template('index.html', posts = posts, page = page, total_pages = posts.total_pages, nextPageUrl = url_for('page', page = page + 1), previousPageUrl = url_for('page', page = page - 1))
 
 @app.route('/<slug>.html', methods=['GET'])
 def read(slug):
     comment = Comment()
-    post = g.postDao.findOne(slug)
+    post = Post.objects(slug = slug)
     return render_template('post.html', post = post, comment = comment)
 
 @app.route('/<slug>.html', methods=['POST'])
@@ -91,12 +92,12 @@ def server_error(error):
 @app.before_request
 def before_request():
     """Setup some common daos so we can use them across the board"""
-    g.postDao = PostDao()
+    g.connect = connect('blogizzle')
 
 @app.after_request
 def after_request(response):
     """Destroy the daos."""
-    del(g.postDao)
+    del(g.connect)
     return response
 
 ########## Custom Jinja2 Filters

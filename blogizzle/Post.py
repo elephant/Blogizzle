@@ -10,22 +10,32 @@ class Post(Document):
     title = StringField(required=True)
     body = StringField(required=True)
     ip = StringField(required=True, regex="\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")
-    publishTime = DateTimeField(default=datetime.now)
-    publishDay = IntField(required=True) #YYYYMMDD used for quick searching/cache optimization
+    publish_time = DateTimeField(default=datetime.now)
+    publish_day = IntField(required=True) #YYYYMMDD used for quick searching/cache optimization
     slug = StringField(required=True, unique=True)
     #comments = SortedListField(EmbeddedDocumentField(Comment))
-    commentCount = IntField(min_value=0)
+    comment_count = IntField(min_value=0)
 
     def addComment(self, comment):
         if isinstance(comment, Comment):
             self.comments.append(comment)
-            commentCount += 1 #({"slug": slug}, {"$push": {"comments": comment}, "$inc": {"commentCount": 1}})
+            comment_count += 1 #({"slug": slug}, {"$push": {"comments": comment}, "$inc": {"comment_count": 1}})
 
     def save(self, safe=True, force_insert=False, validate=True):
-        if self.publishTime is None:
-            self.publishTime = datetime.now
+        if self.publish_time is None:
+            self.publish_time = datetime.now
         if self.slug is None:
-            self.slug = self.publishTime.strftime("%Y.%b") + "-" + self.title.lower().replace(" ", "-")
-        if self.publishDay is None:
-            self.publishDay = int(self.publishTime.strftime("%Y%m%d"))
+            self.slug = self.publish_time.strftime("%Y.%b") + "-" + self.title.lower().replace(" ", "-")
+        if self.publish_day is None:
+            self.publish_day = int(self.publish_time.strftime("%Y%m%d"))
         Document.save(self, safe=safe, force_insert=force_insert, validate=validate)
+
+    def posts_by_page(self, page = 1, posts_per_page = 5):
+        """Get a set of posts by page number, starting with 1"""
+        page = page - 1 #convert to 0 based index
+        start = page * posts_per_page
+        end = start + posts_per_page
+        return self.objects[start:end]
+
+    def total_pages(self, posts_per_page = 5):
+        return len(self.objects) / (posts_per_page + (posts_per_page % posts_per_page))
