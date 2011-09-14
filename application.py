@@ -18,20 +18,22 @@ app.secret_key = "\x81\x8e\xf7\xdbF\xc7\xc2\x89\xbd:\xdaW\x9e\x12\x8e\xb2\x14\xf
 ########## Routes
 @app.route('/')
 def index():
-    posts = Post.objects
     page = 1
-    return render_template('index.html', posts = posts, page = page, total_pages = Post.total_pages, nextPageUrl = url_for('page', page = page + 1), previousPageUrl = url_for('page', page = page - 1))
+    posts = Post.posts_by_page(page)
+    total_pages = Post.total_pages()
+    return render_template('index.html', posts = posts, page = page, total_pages = total_pages, nextPageUrl = url_for('page', page = page + 1), previousPageUrl = url_for('page', page = page - 1))
 
 @app.route('/page<int:page>')
 def page(page):
     if page < 2:
         return redirect(url_for('index'), 301)
     else:
-      if page > Post.total_pages:
+      total_pages = Post.total_pages()
+      if page > total_pages:
         return redirect(url_for('index'), 301)
       else:
         posts = Post.posts_by_page(page)
-        return render_template('index.html', posts = posts, page = page, total_pages = posts.total_pages, nextPageUrl = url_for('page', page = page + 1), previousPageUrl = url_for('page', page = page - 1))
+        return render_template('index.html', posts = posts, page = page, total_pages = total_pages, nextPageUrl = url_for('page', page = page + 1), previousPageUrl = url_for('page', page = page - 1))
 
 @app.route('/<slug>.html', methods=['GET'])
 def read(slug):
@@ -69,9 +71,13 @@ def postNew():
 @app.route('/post', methods=['POST'])
 def postSave():
     app.open_session(request)
-    post = Post(request.form)
+    post = Post()
+    post.init_from_dict(request.form)
+    print post.title
+    print post.body
     try:
-        post.save(post)
+        post.save()
+        print post.slug
         flash("Saved")
         return redirect(url_for('read', slug = post.slug))
     except:

@@ -16,6 +16,13 @@ class Post(Document):
     #comments = SortedListField(EmbeddedDocumentField(Comment))
     comment_count = IntField(min_value=0)
 
+    def init_from_dict(self, dictionary):
+        if dictionary is not None and isinstance(dictionary, dict):
+            if 'title' in dictionary:
+                self.title = dictionary['title']
+            if 'body' in dictionary:
+                self.body = dictionary['body']
+
     def addComment(self, comment):
         if isinstance(comment, Comment):
             self.comments.append(comment)
@@ -30,12 +37,14 @@ class Post(Document):
             self.publish_day = int(self.publish_time.strftime("%Y%m%d"))
         Document.save(self, safe=safe, force_insert=force_insert, validate=validate)
 
-    def posts_by_page(self, page = 1, posts_per_page = 5):
+    @staticmethod
+    def posts_by_page(page = 1, posts_per_page = 5):
         """Get a set of posts by page number, starting with 1"""
         page = page - 1 #convert to 0 based index
         start = page * posts_per_page
         end = start + posts_per_page
-        return self.objects[start:end]
+        return Post.objects[start:end]
 
-    def total_pages(self, posts_per_page = 5):
-        return len(self.objects) / (posts_per_page + (posts_per_page % posts_per_page))
+    @staticmethod
+    def total_pages(posts_per_page = 5):
+        return len(Post.objects) / (posts_per_page + (posts_per_page % posts_per_page))
