@@ -38,7 +38,7 @@ def page(page):
 @app.route('/<slug>.html', methods=['GET'])
 def read(slug):
     comment = Comment()
-    post = Post.objects(slug = slug)
+    post = Post.objects(slug = slug)[0]
     return render_template('post.html', post = post, comment = comment)
 
 @app.route('/<slug>.html', methods=['POST'])
@@ -75,6 +75,8 @@ def postSave():
     post.init_from_dict(request.form)
     print post.title
     print post.body
+    print dir(request)
+    post.ip = request.remote_addr
     try:
         post.save()
         print post.slug

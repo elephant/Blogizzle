@@ -4,17 +4,18 @@ from mongoengine import DateTimeField, Document, EmbeddedDocumentField, IntField
 
 from Comment import Comment
 
+__all__ = ['Post']
+
 class Post(Document):
     """A post"""
-    _id = ObjectIdField()
-    title = StringField(required=True)
-    body = StringField(required=True)
-    ip = StringField(required=True, regex="\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")
-    publish_time = DateTimeField(default=datetime.now)
-    publish_day = IntField(required=True) #YYYYMMDD used for quick searching/cache optimization
-    slug = StringField(required=True, unique=True)
+    title = StringField(required = True)
+    body = StringField(required = True)
+    ip = StringField(required = True, regex = "\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")
+    publish_time = DateTimeField(default = datetime.now)
+    publish_day = IntField(required = True) #YYYYMMDD used for quick searching/cache optimization
+    slug = StringField(required = True, unique = True)
     #comments = SortedListField(EmbeddedDocumentField(Comment))
-    comment_count = IntField(min_value=0)
+    comment_count = IntField(min_value = 0, default = 0)
 
     def init_from_dict(self, dictionary):
         if dictionary is not None and isinstance(dictionary, dict):
@@ -26,7 +27,7 @@ class Post(Document):
     def addComment(self, comment):
         if isinstance(comment, Comment):
             self.comments.append(comment)
-            comment_count += 1 #({"slug": slug}, {"$push": {"comments": comment}, "$inc": {"comment_count": 1}})
+            comment_count = comment_count + 1 #({"slug": slug}, {"$push": {"comments": comment}, "$inc": {"comment_count": 1}})
 
     def save(self, safe=True, force_insert=False, validate=True):
         if self.publish_time is None:
