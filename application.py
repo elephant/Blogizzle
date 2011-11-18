@@ -10,7 +10,6 @@ import markdown
 from mongoengine import connect
 
 from blogizzle.Post import Post
-from blogizzle.Comment import Comment
 
 app = Flask(__name__)
 app.secret_key = "\x81\x8e\xf7\xdbF\xc7\xc2\x89\xbd:\xdaW\x9e\x12\x8e\xb2\x14\xf0\x14\xde\x08\x0e\x9a\x82"
@@ -37,31 +36,8 @@ def page(page):
 
 @app.route('/<slug>.html', methods=['GET'])
 def read(slug):
-    comment = Comment()
     post = Post.objects(slug = slug)[0]
-    return render_template('post.html', post = post, comment = comment)
-
-@app.route('/<slug>.html', methods=['POST'])
-def commentSave(slug):
-    app.open_session(request)
-    formVals = request.form
-    comment = Comment(formVals)
-    comment.body = Markup(comment.body).striptags()
-
-    if formVals['email'] and formVals['author'] and formVals['body'] and len(formVals['body']) > 10:
-        emailRegex = re.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(?:[a-zA-Z]{2}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)$")
-        if emailRegex.match(formVals['email']):
-            session['email'] = formVals['email']
-            session['author'] = formVals['author']
-            comment.ensureDefaults()
-            g.postDao.saveComment(comment, slug)
-            comment.body = ""
-        else:
-            flash("The email address you entered, '%s', is invalid." % formVals['email'], category='error')
-    else:
-        flash("You must enter your name, email address, and some text to post a comment.", category='error')
-    post = g.postDao.findOne(slug)
-    return render_template('post.html', post = post, comment = comment)
+    return render_template('post.html', post = post)
 
 @app.route('/post')
 def postNew():
@@ -73,13 +49,9 @@ def postSave():
     app.open_session(request)
     post = Post()
     post.init_from_dict(request.form)
-    print post.title
-    print post.body
-    print dir(request)
     post.ip = request.remote_addr
     try:
         post.save()
-        print post.slug
         flash("Saved")
         return redirect(url_for('read', slug = post.slug))
     except:
@@ -104,7 +76,7 @@ def before_request():
 
 @app.after_request
 def after_request(response):
-    """Destroy the daos."""
+    """Destroy"""
     del(g.connect)
     return response
 

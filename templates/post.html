@@ -3,16 +3,25 @@
   <head>
     <title>{{post.title}} ({{post.publish_time|datetimeformat}})</title>
     <link rel="stylesheet" type="text/css" href="/static/styles.css" />
-    <link rel="canonical" type="text/html" href="http://onomatizzle.com" />
   </head>
   <body>
     {% include '_components/header.html' %}
     <section class="article">
         {% include '_components/post.html' %}
     </section>
-    <section id="postComment">
-      <h5>Post a comment</h5>
-      {% include '_components/forms/comment.html' %}
+    <section class="comments">
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        var disqus_shortname = 'blogizzle';
+        {% if config.DEBUG %}
+        var disqus_developer = 1;
+        {% endif %}
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
     </section>
     {% include '_components/footer.html' %}
   </body>

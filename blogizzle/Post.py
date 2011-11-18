@@ -2,12 +2,18 @@ from datetime import datetime
 
 from mongoengine import DateTimeField, Document, EmbeddedDocumentField, IntField, ObjectIdField, SortedListField, StringField, URLField
 
-from Comment import Comment
-
 __all__ = ['Post']
 
 class Post(Document):
     """A post"""
+    meta = {
+        'index_drop_dups': True,
+        'index_background': True,
+        'indexes': [
+            'slug',
+            'publish_time'
+        ]
+    }
     title = StringField(required = True)
     body = StringField(required = True)
     ip = StringField(required = True, regex = "\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")
@@ -23,11 +29,6 @@ class Post(Document):
                 self.title = dictionary['title']
             if 'body' in dictionary:
                 self.body = dictionary['body']
-
-    def addComment(self, comment):
-        if isinstance(comment, Comment):
-            self.comments.append(comment)
-            comment_count = comment_count + 1 #({"slug": slug}, {"$push": {"comments": comment}, "$inc": {"comment_count": 1}})
 
     def save(self, safe=True, force_insert=False, validate=True):
         if self.publish_time is None:
