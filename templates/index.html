@@ -6,6 +6,7 @@
     <link rel="canonical" type="text/html" href="http://blogizzle.com" />
   </head>
   <body>
+    <div id="p">
     {% include '_components/header.html' %}
     <section class="articles">
         {% for post in posts %}
@@ -14,5 +15,6 @@
     </section>
     {% include '_components/pagination.html' %}
     {% include '_components/footer.html' %}
+    </div>
   </body>
 </html>

@@ -1,11 +1,17 @@
 body {
-    background: #E3F3F4;
-    color: #3B027F;
+    background: #97ACBE;
+    color: #08131C;
     font-family: courier,monospace;
     height: 100%;
     margin: 0;
 }
 
+#p {
+    background: white;
+    width: 80%;
+    position: relative;
+    left: 10%
+}
 a {
     color: rgb(210, 255, 255);
 }
@@ -133,16 +139,6 @@ section.article header a, section.article header a:visited {
     color: rgb(210, 255, 255);
 }
 
-section#comments p.by {
-    font-size: 10pt;
-}
-
-section#postComment {
-    margin: 10%;
-    width: 80%;
-    display: block;
-}
-
 span.time, p.asterisk {
     color: gray;
 }
@@ -151,6 +147,8 @@ span.time, p.asterisk {
     color: red;
 }
 
+
+/* Forms */
 legend {
     color: yellow;
 }
