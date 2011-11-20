@@ -1,3 +1,4 @@
+import math
 from datetime import datetime
 
 from mongoengine import DateTimeField, Document, EmbeddedDocumentField, IntField, ObjectIdField, SortedListField, StringField, URLField
@@ -49,4 +50,4 @@ class Post(Document):
 
     @staticmethod
     def total_pages(posts_per_page = 5):
-        return len(Post.objects) / (posts_per_page + (posts_per_page % posts_per_page))
+        return int(math.ceil(len(Post.objects) / float(posts_per_page)))
