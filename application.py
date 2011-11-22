@@ -55,7 +55,8 @@ def postSave():
     app.open_session(request)
     post = Post()
     post.init_from_dict(request.form)
-    post.body = Markup(post.body).striptags()
+    import re
+    post.body = re.sub(r'(<!--.*?-->|<[^>]*>)', '', post.body)
     post.ip = request.remote_addr
     try:
         post.save()

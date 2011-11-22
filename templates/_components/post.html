@@ -6,7 +6,7 @@
           </p>
         </header>
         <section class="body">
-            {{post.body|replace("\n","<br/>")}}
+            <pre>{{post.body}}</pre>
         </section>
         {% if post.comments %}
             {% include '_components/comments.html' %}

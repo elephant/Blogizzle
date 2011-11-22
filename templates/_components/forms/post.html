@@ -10,7 +10,7 @@
             <fieldset>
                 <legend>Say anything...</legend>
                 <input type="text" name="title" placeholder="Title" required="required" value="{% if post %}{{post.title}}{% endif %}" />
-                <textarea name="body">{% if post %}{{post.body}}{% endif %}</textarea>
+                <textarea name="body" required="required">{% if post %}{{post.body}}{% endif %}</textarea><span>(html will be stripped)</span>
             </fieldset>
             <button type="submit">Save</button>
         </form>
