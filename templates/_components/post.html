@@ -10,7 +10,7 @@
           </p>
         </header>
         <section class="body">
-            {{post.body|markdown2html}}
+            {{post.body}}
         </section>
         {% if post.comments %}
             {% include '_components/comments.html' %}

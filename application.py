@@ -22,6 +22,10 @@ def index():
     total_pages = Post.total_pages()
     return render_template('index.html', posts = posts, page = page, total_pages = total_pages, nextPageUrl = url_for('page', page = page + 1), previousPageUrl = url_for('page', page = page - 1))
 
+@app.route('/about.html')
+def about():
+    return render_template('about.html')
+
 @app.route('/page<int:page>')
 def page(page):
     if page < 2:

@@ -1,14 +1,10 @@
-    <form method="post" action="{{url_for('postSave')}}">
-        <fieldset>
-            <legend>Post</legend>
-            <input type="text" name="title" placeholder="Title" required="required" />
-            <input type="datetime-local" name="publishTime" required="required" placeholder="Publish Date/Time ({{today|datetimeformat('%Y-%m-%dT%H:%M:%S')}})" min="{{today|datetimeformat('%Y-%m-%dT%H:%M:%S')}}" />
-            <textarea name="body"></textarea>
-        </fieldset>
-        <fieldset>
-            <legend>Author</legend>
-            <input type="text" name="author" placeholder="Name" required="required" value="{{session['author']}}" />
-            <input type="email" name="email" placeholder="Email Address" required="required" value="{{session['email']}}" />
-        </fieldset>
-        <button type="submit">Save</button>
-    </form>
+    <section class="form">
+        <form method="post" action="{{url_for('postSave')}}">
+            <fieldset>
+                <legend>Say anything...</legend>
+                <input type="text" name="title" placeholder="Title" required="required" />
+                <textarea name="body"></textarea>
+            </fieldset>
+            <button type="submit">Save</button>
+        </form>
+    </section>

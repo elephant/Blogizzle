@@ -1,6 +1,6 @@
 body {
     background: #97ACBE;
-    color: #08131C;
+    color: #1A1E21;
     font-family: courier,monospace;
     height: 100%;
     margin: 0;
@@ -10,28 +10,31 @@ body {
     background: white;
     width: 80%;
     position: relative;
-    left: 10%
+    left: 10%;
+    
+    -moz-box-shadow:5px  5px  20px  #08131C;
+    -webkit-box-shadow:5px  5px  20px  #08131C;
+    box-shadow:5px  5px  20px  #08131C;
 }
 a {
-    color: rgb(210, 255, 255);
+    color: #20282F;
 }
 
 a:visited {
-    color: rgb(255, 255, 255);
+    color: #1A1E21;
 }
 
 img {
-    -moz-box-shadow:5px  5px  5px  #321936;
-    -webkit-box-shadow:5px  5px  5px  #321936;
-    box-shadow:5px  5px  5px  #321936;
+    -moz-box-shadow:5px  5px  5px  #A7B3BE;
+    -webkit-box-shadow:5px  5px  5px  #A7B3BE;
+    box-shadow:5px  5px  5px  #A7B3BE;
 }
 
-h2, h3, h4, h5 {
-    color: rgb(210, 255, 210);
+h1, h2, h3, h4, h5 {
+    color: #08131C;
 }
 
 h1 {
-    color: rgb(210, 255, 255);
     font-size: 18pt;
 }
 
@@ -43,14 +46,15 @@ h3, h4, h5 {
     font-size: 14pt;
 }
 
-header.title, body footer {
+header.title {
     background: white;
-    text-align: center;
-    color: #645E95;
+    color: #08131C;
     display: block;
+    position: relative;
+    left: 10%;
+    width: 200px;
 }
 header.title a, header.title a:visited {
-    color: black;
     text-decoration: none;
 }
 
@@ -65,20 +69,24 @@ header.title address {
 }
 
 header.title address a {
-    color: #645E74;
+    -moz-box-shadow:5px  5px  10px  #A7B3BE;
+    -webkit-box-shadow:5px  5px  10px  #A7B3BE;
+    box-shadow:5px  5px  10px  #A7B3BE;
 }
 
 header.title address a:visited {
-    color: #645E95;
+    color: #1A1E21;
 }
 
 body footer {
     position: relative;
     top: 2em;
+    color: #20282F;
 }
 
 body footer a, body footer a:visited {
-    color: red;
+    color: #20282F;
+    text-decoration: none;
 }
 
 nav {
@@ -121,7 +129,7 @@ article {
 }
 
 article header h1 {
-    color: yellow;
+    color: #08131C;
 }
 
 article header address, article header p {
@@ -136,7 +144,14 @@ section.articles:nth-child(1) {
 
 section.article header a, section.article header a:visited {
     text-decoration: none;
-    color: rgb(210, 255, 255);
+}
+
+section.comments {
+    margin: 0 10%;
+}
+
+section.about {
+    margin: 10%;
 }
 
 span.time, p.asterisk {
@@ -150,7 +165,7 @@ span.time, p.asterisk {
 
 /* Forms */
 legend {
-    color: yellow;
+    color: #08131C;
 }
 
 label {
@@ -160,6 +175,9 @@ label {
 
 button {
     margin-top: 1em;
+    position: relative;
+    left: 45%;
+    font-size: 30pt;
 }
 
 textarea {
@@ -170,8 +188,8 @@ textarea {
 }
 
 input, textarea {
-    color: white;
-    background: black;
+    color: #1A1E21;
+    background: white;
     border: thin dashed gray;
     font-family: courier,monospace;
     font-size: 12pt;
@@ -180,7 +198,7 @@ input, textarea {
 input[name="title"] {
     font-size: 16pt;
     width: 30em;
-    color: yellow;
+    color: #08131C;
     font-size: 20pt;
     font-weight: bold;
 }

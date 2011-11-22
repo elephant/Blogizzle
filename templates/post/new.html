@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>New Post</title>
+    <title>New Post - Blogizzle</title>
     <link rel="stylesheet" type="text/css" href="/static/styles.css"/>
   </head>
   <body>
-    <h1>New Post</h1>
+    <div id="p">
+    {% include '_components/header.html' %}
+    <section class="about">
+        <p><a href="{{url_for('about')}}">What is this?</a></p>
+    </section>
     {% include '_components/forms/post.html' %}
+    </div>
   </body>
 </html>

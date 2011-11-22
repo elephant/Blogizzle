@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Open blog - Blogizzle</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css" />
+  </head>
+  <body>
+    <div id="p">
+    {% include '_components/header.html' %}
+    <section class="about">
+        <h1>About Blogizzle</h1>
+        <p>
+            Blogizzle is an open blogging experiment. You can post whatever you want. No questions asked. Blogizzle was created by <a href="http://www.jonathansuchland.com/">Jonathan Suchland</a>.
+        </p>
+        <h2>What information is collected about me?</h2>
+        <p>
+            We save your IP address. We have no interest in reselling any information you post.
+        </p>
+    </section>
+    {% include '_components/footer.html' %}
+    </div>
+  </body>
+</html>
