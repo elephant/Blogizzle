@@ -1,9 +1,16 @@
     <section class="form">
+        {% if messages %}
+        <ul class="messages">
+        {% for category, message in messages %}
+            <li class="{{category}}">{{message}}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
         <form method="post" action="{{url_for('postSave')}}">
             <fieldset>
                 <legend>Say anything...</legend>
-                <input type="text" name="title" placeholder="Title" required="required" />
-                <textarea name="body"></textarea>
+                <input type="text" name="title" placeholder="Title" required="required" value="{% if post %}{{post.title}}{% endif %}" />
+                <textarea name="body">{% if post %}{{post.body}}{% endif %}</textarea>
             </fieldset>
             <button type="submit">Save</button>
         </form>

@@ -15,8 +15,8 @@ class Post(Document):
             'publish_time'
         ]
     }
-    title = StringField(required = True)
-    body = StringField(required = True)
+    title = StringField(required = True, min_length = 1)
+    body = StringField(required = True, min_length = 1)
     ip = StringField(required = True, regex = "\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")
     publish_time = DateTimeField(default = datetime.now)
     publish_day = IntField(required = True) #YYYYMMDD used for quick searching/cache optimization

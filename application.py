@@ -3,6 +3,8 @@ import re
 from datetime import datetime
 from hashlib import md5
 
+import flask
+import mongoengine
 from flask import Flask, render_template, request, url_for, redirect, session, g, flash
 from jinja2 import Markup, environmentfilter, evalcontextfilter
 import markdown
@@ -57,11 +59,16 @@ def postSave():
     post.ip = request.remote_addr
     try:
         post.save()
-        flash("Saved")
         return redirect(url_for('read', slug = post.slug))
+    except (mongoengine.ValidationError) as validationError:
+        flash(validationError, category = "error")
+        return render_template('post/new.html', post = post, messages = flask.get_flashed_messages(with_categories = True))
+    except (mongoengine.OperationError) as operationError:
+        flash("A post with this title already exists.", category = "error")
+        return render_template('post/new.html', post = post, messages = flask.get_flashed_messages(with_categories = True))
     except:
-        flash("Uh oh", category = "error")
-        return render_template('post.html', post = post)
+        flash("Uh oh. An unexpected error has occurred.", category = "error")
+        return render_template('post/new.html', post = post, messages = flask.get_flashed_messages(with_categories = True))
 
 ########## Common Application Functionality
 #errors
