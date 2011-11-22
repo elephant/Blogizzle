@@ -41,13 +41,13 @@ class Post(Document):
         Document.save(self, safe=safe, force_insert=force_insert, validate=validate)
 
     @staticmethod
-    def posts_by_page(page = 1, posts_per_page = 5):
+    def posts_by_page(page = 1, posts_per_page = 1):
         """Get a set of posts by page number, starting with 1"""
         page = page - 1 #convert to 0 based index
         start = page * posts_per_page
         end = start + posts_per_page
-        return Post.objects[start:end]
+        return Post.objects[start:end].order_by('-publish_time')
 
     @staticmethod
-    def total_pages(posts_per_page = 5):
+    def total_pages(posts_per_page = 1):
         return int(math.ceil(len(Post.objects) / float(posts_per_page)))
