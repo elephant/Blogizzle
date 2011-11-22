@@ -1,17 +1,17 @@
 <nav>
-    <p>Page {{page}} of {{total_pages}}</p>
+    <p>Post {{page}} of {{total_pages}}</p>
     <ul>
         {% if page == 1 %}
-            <li class="previous"><del>Previous page</del></li>
+            <li class="previous"><del>Previous post</del></li>
         {% elif page - 1 == 1 %}
-            <li class="previous"><a href="{{url_for('index')}}">Previous page</a></li>
+            <li class="previous"><a href="{{url_for('index')}}">Previous post</a></li>
         {% else %}
-            <li class="previous"><a href="{{url_for('page', page = page - 1)}}">Previous page</a></li>
+            <li class="previous"><a href="{{url_for('page', page = page - 1)}}">Previous post</a></li>
         {% endif %}
         {% if page == total_pages %}
-            <li class="next"><del>Next page</del></li>
+            <li class="next"><del>Next post</del></li>
         {% else %}
-            <li class="next"><a href="{{url_for('page', page = page + 1)}}">Next page</a></li>
+            <li class="next"><a href="{{url_for('page', page = page + 1)}}">Next post</a></li>
         {% endif %}
     </ul>
 </nav>

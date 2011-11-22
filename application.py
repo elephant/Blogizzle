@@ -53,6 +53,7 @@ def postSave():
     app.open_session(request)
     post = Post()
     post.init_from_dict(request.form)
+    post.body = Markup(post.body).striptags()
     post.ip = request.remote_addr
     try:
         post.save()

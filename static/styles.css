@@ -52,10 +52,16 @@ header.title {
     display: block;
     position: relative;
     left: 10%;
-    width: 200px;
+    width: 80%;
 }
 header.title a, header.title a:visited {
     text-decoration: none;
+}
+header.title p.post {
+    float: right;
+    position: relative;
+    top: -2.5em;
+    text-shadow: 2px 2px 5px #A7B3BE;
 }
 
 header.title h1 {
@@ -121,6 +127,10 @@ nav li.next {
     float: right;
 }
 
+nav li del {
+    color: #A7B3Be;
+}
+
 article {
     width: 80%;
     margin: 10%;
@@ -128,8 +138,13 @@ article {
     display: block;
 }
 
+article header {
+    margin-bottom: 1em;
+}
+
 article header h1 {
     color: #08131C;
+    margin-bottom: 0.25em;
 }
 
 article header address, article header p {
