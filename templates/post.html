@@ -15,6 +15,7 @@
         <script type="text/javascript">
             var disqus_shortname = 'blogizzle';
             var disqus_url = window.location.protocol + "//" + window.location.hostname + "{{url_for('read', slug = post.slug)}}";
+            var disqus_identifier = "{{post.id}}";
             {% if config.DEBUG %}
                 var disqus_developer = 1;
             {% endif %}
