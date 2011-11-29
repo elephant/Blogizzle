@@ -3,6 +3,7 @@
   <head>
     <title>{{post.title}} ({{post.publish_time|datetimeformat}})</title>
     <link rel="stylesheet" type="text/css" href="/static/styles.css" />
+    <link rel="alternate" type="application/rss+xml" href="{{url_for('rss')}}" />
   </head>
   <body>
     <div id="p">

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+   <channel>
+      <title>Blogizzle</title>
+      <link>http://blogizzle.com/</link>
+      <description>Open Blog: Blogizzle</description>
+      <language>en-us</language>
+      <pubDate>{{g.now|datetimeformat("%a, %d %b %Y %H:%M:%S %Z")}}</pubDate>
+
+      <lastBuildDate>{{g.now|datetimeformat("%a, %d %b %Y %H:%M:%S %Z")}}</lastBuildDate>
+      <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+      <generator>Blogizzle</generator>
+      <managingEditor></managingEditor>
+      <webMaster></webMaster>
+      {% for post in posts %}
+      <item>
+         <title>{{post.title}}</title>
+         <link>http://blogizzle.com{{url_for('read', slug = post.slug)}}</link>
+         <description>{{post.body}}</description>
+         <pubDate>{{post.publish_time|datetimeformat("%a, %d %b %Y %H:%M:%S %Z")}}</pubDate>
+         <guid>{{post.id}}</guid>
+      </item>
+      {% endfor %}
+   </channel>
+</rss>

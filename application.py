@@ -24,6 +24,13 @@ def index():
     total_pages = Post.total_pages()
     return render_template('index.html', posts = posts, page = page, total_pages = total_pages, nextPageUrl = url_for('page', page = page + 1), previousPageUrl = url_for('page', page = page - 1))
 
+@app.route('/rss.xml')
+def rss():
+    posts = Post.posts_by_page(posts_per_page = 20)
+    response = flask.make_response(render_template('rss.xml', posts = posts), 200)
+    response.headers['content-type'] = "application/rss+xml"
+    return response
+
 @app.route('/about.html')
 def about():
     return render_template('about.html')
@@ -86,11 +93,13 @@ def server_error(error):
 def before_request():
     """Setup some common daos so we can use them across the board"""
     g.connect = connect('blogizzle')
+    g.now = datetime.now()
 
 @app.after_request
 def after_request(response):
     """Destroy"""
     del(g.connect)
+    del(g.now)
     return response
 
 ########## Custom Jinja2 Filters
