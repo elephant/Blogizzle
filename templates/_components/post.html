@@ -2,7 +2,7 @@
         <header>
           <h1><a href="{{url_for('read', slug = post.slug)}}" rel="permalink">{{post.title|default('post not found')}}</a></h1>
           <p>
-            <span class="time">Published on {{post.publish_time|datetimeformat}}</span>
+            <span class="time">Published on {{post.publish_time|datetimeformat}}</span>{% if show_comment_link %} | <span class="comments"><a href="{{url_for('read', slug = post.slug)}}#disqus_thread" data-disqus-identifier="{{post.id}}">Post a comment</a></span>{% endif %}
           </p>
         </header>
         <section class="body">
