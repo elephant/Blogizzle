@@ -1,7 +1,9 @@
+@import url(http://fonts.googleapis.com/css?family=Cardo);
+
 body {
     background: #97ACBE;
     color: #1A1E21;
-    font-family: courier,monospace;
+    font-family: 'Cardo',courier,monospace,serif;
     height: 100%;
     margin: 0;
 }
