@@ -8,9 +8,4 @@
         <section class="body">
             <pre>{{post.body}}</pre>
         </section>
-        {% if post.comments %}
-            {% include '_components/comments.html' %}
-        {% else %}
-          <a name="comments"></a>
-        {% endif %}
     </article>
