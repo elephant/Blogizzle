@@ -230,6 +230,9 @@ input[name="author"], input[type="email"] {
 }
 
 
+pre {
+    white-space: pre-wrap;
+}
 
 code {
     display: block;
