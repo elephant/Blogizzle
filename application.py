@@ -1,6 +1,7 @@
 import datetime
 import hashlib
 import logging
+import os
 import re
 #from datetime import datetime
 
@@ -10,6 +11,8 @@ import mongoengine
 import markdown
 
 from blogizzle.Post import Post
+
+os.environ['TZ'] = "UTC"
 
 app = flask.Flask(__name__)
 app.secret_key = "\x81\x8e\xf7\xdbF\xc7\xc2\x89\xbd:\xdaW\x9e\x12\x8e\xb2\x14\xf0\x14\xde\x08\x0e\x9a\x82"
@@ -110,7 +113,7 @@ def after_request(response):
     return response
 
 ########## Custom Jinja2 Filters
-def datetimeformat(value, format='%A, %B %d %I:%M %p %Z'):
+def datetimeformat(value, format='%A, %B %d %I:%M %p UTC'):
     return value.strftime(format)
 
 def markdown2html(value):
