@@ -1,14 +1,13 @@
+import datetime
+import hashlib
 import logging
 import re
-from datetime import datetime
-from hashlib import md5
+#from datetime import datetime
 
 import flask
 import jinja2
 import mongoengine
 import markdown
-
-from mongoengine import connect
 
 from blogizzle.Post import Post
 
@@ -53,7 +52,7 @@ def read(slug):
 
 @app.route('/post')
 def postNew():
-    today = datetime.today()
+    today = datetime.datetime.today()
     return flask.render_template('post/new.html', today = today)
 
 @app.route('/post', methods=['POST'])
@@ -92,8 +91,8 @@ def server_error(error):
 @app.before_request
 def before_request():
     """Setup some common daos so we can use them across the board"""
-    flask.g.connect = connect('blogizzle')
-    flask.g.now = datetime.now()
+    flask.g.connect = mongoengine.connect('blogizzle')
+    flask.g.now = datetime.datetime.now()
 
 @app.after_request
 def after_request(response):
@@ -112,7 +111,7 @@ def markdown2html(value):
 def gravatar(email, size=80):
     """Return the gravatar image for the given email address."""
     return 'http://www.gravatar.com/avatar/%s?d=identicon&s=%d' % \
-        (md5(email.strip().lower().encode('utf-8')).hexdigest(), size)
+        (hashlib.md5(email.strip().lower().encode('utf-8')).hexdigest(), size)
 
 app.jinja_env.filters['datetimeformat'] = datetimeformat
 app.jinja_env.filters['markdown2html'] = markdown2html
