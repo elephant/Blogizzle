@@ -246,3 +246,10 @@ code {
     border-radius: 5px;
     margin-left: 2em;
 }
+
+/* disqus */
+#disqus_thread * {
+    font-size: 10pt;
+}
+
+
