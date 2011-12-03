@@ -4,12 +4,12 @@
     <p>{{g.post_count}} Posts</p>
     <ul>
         {% if previous_post %}
-            <li class="previous"><a href="{{previous_post.slug}}.html">Previous ({{previous_post.title}})</a></li>
+            <li class="previous"><a href="{{url_for('read', slug = previous_post.slug)}}">Previous ({{previous_post.title}})</a></li>
         {% else %}
             <li class="previous"><del>Previous</del></li>
         {% endif %}
         {% if next_post %}
-            <li class="next"><a href="{{next_post.slug}}.html">Next ({{next_post.title}})</a></li>
+            <li class="next"><a href="{{url_for('read', slug = next_post.slug)}}">Next ({{next_post.title}})</a></li>
         {% else %}
             <li class="next"><del>Next</del></li>
         {% endif %}
