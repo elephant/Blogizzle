@@ -13,7 +13,8 @@ class Post(Document):
         'indexes': [
             'slug',
             'publish_time'
-        ]
+        ],
+        'ordering': ['-publish_time']
     }
     title = StringField(required = True, min_length = 1)
     body = StringField(required = True, min_length = 1)
@@ -39,6 +40,26 @@ class Post(Document):
         if self.publish_day is None:
             self.publish_day = int(self.publish_time.strftime("%Y%m%d"))
         Document.save(self, safe=safe, force_insert=force_insert, validate=validate)
+
+    def posts_after_this(self):
+        #the ordering looks odd, but that's because we're displaying posts in descending order
+        return Post.objects(__raw__ = {"_id":{"$lt": self.id }})
+
+    def posts_before_this(self):
+        #the ordering looks odd, but that's because we're displaying posts in descending order
+        return Post.objects(__raw__ = {"_id":{"$gt": self.id }}).order_by('publish_time')
+
+    def next_post(self):
+        next_post = self.posts_after_this()
+        if len(next_post) > 0:
+            return next_post[0]
+        return None
+
+    def previous_post(self):
+        previous_post = self.posts_before_this()
+        if len(previous_post) > 0:
+            return previous_post[0]
+        return None
 
     @staticmethod
     def posts_by_page(page = 1, posts_per_page = 1):

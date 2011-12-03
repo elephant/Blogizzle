@@ -17,14 +17,12 @@ app.secret_key = "\x81\x8e\xf7\xdbF\xc7\xc2\x89\xbd:\xdaW\x9e\x12\x8e\xb2\x14\xf
 ########## Routes
 @app.route('/')
 def index():
-    page = 1
-    posts = Post.posts_by_page(page)
-    total_pages = Post.total_pages()
-    return flask.render_template('index.html', posts = posts, page = page, total_pages = total_pages, nextPageUrl = flask.url_for('page', page = page + 1), previousPageUrl = flask.url_for('page', page = page - 1))
+    post = Post.objects[0]
+    return flask.render_template('post.html', post = post)
 
 @app.route('/rss.xml')
 def rss():
-    posts = Post.posts_by_page(posts_per_page = 20)
+    posts = Post.objects[0:20]
     response = flask.make_response(flask.render_template('rss.xml', posts = posts), 200)
     response.headers['content-type'] = "application/rss+xml"
     return response
@@ -32,6 +30,15 @@ def rss():
 @app.route('/about.html')
 def about():
     return flask.render_template('about.html')
+
+@app.route('/search.html')
+def search():
+    #this is just a stub
+    page = 1
+    post = Post.objects[0]
+    total_pages = Post.total_pages()
+    return flask.render_template('index.html', post = post, page = page, nextPageUrl = flask.url_for('page', page = page + 1), previousPageUrl = flask.url_for('page', page = page - 1))
+
 
 @app.route('/page<int:page>')
 def page(page):
@@ -73,7 +80,7 @@ def postSave():
         flask.flash("A post with this title already exists.", category = "error")
         return flask.render_template('post/new.html', post = post, messages = flask.get_flashed_messages(with_categories = True))
     except Exception as uh_oh:
-        flask.flash("Uh oh. An unexpected error has occurred. {}".format(uh_oh), category = "error")
+        flask.flash("Uh oh. An unexpected error has occurred.", category = "error")
         logging.error(uh_oh)
         return flask.render_template('post/new.html', post = post, messages = flask.get_flashed_messages(with_categories = True))
 
@@ -93,6 +100,7 @@ def before_request():
     """Setup some common daos so we can use them across the board"""
     flask.g.connect = mongoengine.connect('blogizzle')
     flask.g.now = datetime.datetime.now()
+    flask.g.post_count = len(Post.objects())
 
 @app.after_request
 def after_request(response):

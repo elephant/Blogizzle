@@ -10,9 +10,7 @@
     {% include '_components/header.html' %}
     <section class="articles">
         {% set show_comment_link=True %}
-        {% for post in posts %}
             {% include '_components/post.html' %}
-        {% endfor %}
     </section>
     {% include '_components/pagination.html' %}
     {% include '_components/footer.html' %}

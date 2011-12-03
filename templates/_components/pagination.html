@@ -1,17 +1,17 @@
+{% set next_post = post.next_post() %}
+{% set previous_post = post.previous_post() %}
 <nav>
-    <p>Post {{page}} of {{total_pages}}</p>
+    <p>{{g.post_count}} Posts</p>
     <ul>
-        {% if page == 1 %}
-            <li class="previous"><del>Previous post</del></li>
-        {% elif page - 1 == 1 %}
-            <li class="previous"><a href="{{url_for('index')}}">Previous post</a></li>
+        {% if previous_post %}
+            <li class="previous"><a href="{{previous_post.slug}}.html">Previous ({{previous_post.title}})</a></li>
         {% else %}
-            <li class="previous"><a href="{{url_for('page', page = page - 1)}}">Previous post</a></li>
+            <li class="previous"><del>Previous</del></li>
         {% endif %}
-        {% if page == total_pages %}
-            <li class="next"><del>Next post</del></li>
+        {% if next_post %}
+            <li class="next"><a href="{{next_post.slug}}.html">Next ({{next_post.title}})</a></li>
         {% else %}
-            <li class="next"><a href="{{url_for('page', page = page + 1)}}">Next post</a></li>
+            <li class="next"><del>Next</del></li>
         {% endif %}
     </ul>
 </nav>
