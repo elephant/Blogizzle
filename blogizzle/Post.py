@@ -18,7 +18,7 @@ class Post(Document):
     title = StringField(required = True, min_length = 1)
     body = StringField(required = True, min_length = 1)
     ip = StringField(required = True, regex = "\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")
-    publish_time = DateTimeField(required = True)
+    publish_time = DateTimeField(default = datetime.now)
     publish_day = IntField(required = True) #YYYYMMDD used for quick searching/cache optimization
     slug = StringField(required = True, unique = True)
     #comments = SortedListField(EmbeddedDocumentField(Comment))
@@ -33,7 +33,7 @@ class Post(Document):
 
     def save(self, safe=True, force_insert=False, validate=True):
         if self.publish_time is None:
-            self.publish_time = datetime.now()
+            self.publish_time = datetime.now
         if self.slug is None:
             self.slug = self.publish_time.strftime("%Y.%b") + "-" + self.title.lower().replace(" ", "-")
         if self.publish_day is None:
