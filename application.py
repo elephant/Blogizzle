@@ -30,6 +30,13 @@ def rss():
     response.headers['content-type'] = "application/rss+xml"
     return response
 
+@app.route('/sitemap.xml')
+def rss():
+    posts = Post.objects[0:200]
+    response = flask.make_response(flask.render_template('sitemap.xml', posts = posts), 200)
+    response.headers['content-type'] = "text/xml"
+    return response
+
 @app.route('/about.html')
 def about():
     return flask.render_template('about.html')
