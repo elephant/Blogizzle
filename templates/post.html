@@ -3,6 +3,7 @@
   <head>
     <title>{{post.title}} ({{post.publish_time|datetimeformat}})</title>
     <link rel="stylesheet" type="text/css" href="/static/styles.css" />
+    <link rel="canonical" type="text/html" href="http://blogizzle.com{{url_for('read', slug = post.slug)}}" />
     <link rel="alternate" type="application/rss+xml" href="{{url_for('rss')}}" />
   </head>
   <body>
