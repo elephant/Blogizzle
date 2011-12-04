@@ -8,4 +8,11 @@
         <section class="body">
             <pre>{{post.body|urlize(40, true)}}</pre>
         </section>
+        <footer>
+          <p>
+            <span class="social">
+              <a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="blogizzle">Tweet</a>&nbsp;<span class="fb-like" style="top: -6px" data-href="http://blogizzle.com{{url_for('read', slug = post.slug)}}" data-send="true" data-layout="button_count" data-width="450" data-show-faces="false" data-font="verdana"></span>
+            </span>
+          </p>
+        </footer>
     </article>
