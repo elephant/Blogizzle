@@ -16,7 +16,7 @@ class Post(Document):
         ],
         'ordering': ['-publish_time']
     }
-    title = StringField(required = True, min_length = 1)
+    title = StringField(required = True, min_length = 1, max_length = 50)
     body = StringField(required = True, min_length = 1)
     ip = StringField(required = True, regex = "\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")
     publish_time = DateTimeField(required = True)

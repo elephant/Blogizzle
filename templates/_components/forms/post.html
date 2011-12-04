@@ -9,7 +9,7 @@
         <form method="post" action="{{url_for('postSave')}}">
             <fieldset>
                 <legend>Say anything...</legend>
-                <input type="text" name="title" placeholder="Title" required="required" value="{% if post %}{{post.title}}{% endif %}" />
+                <input type="text" name="title" placeholder="Title" required="required" value="{% if post %}{{post.title}}{% endif %}" maxlength="50" />
                 <textarea name="body" required="required">{% if post %}{{post.body}}{% endif %}</textarea><span>(html will be stripped)</span>
             </fieldset>
             <button type="submit">Save</button>
