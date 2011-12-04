@@ -10,9 +10,11 @@
         </section>
         <footer>
           <p>
-            <span class="social">
-              <a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="blogizzle">Tweet</a>&nbsp;<span class="fb-like" style="top: -6px" data-href="http://blogizzle.com{{url_for('read', slug = post.slug)}}" data-send="true" data-layout="button_count" data-width="450" data-show-faces="false" data-font="verdana"></span>
-            </span>
+            <div class="social">
+              <a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="blogizzle">Tweet</a>&nbsp;
+              <span class="fb-like" style="width: 120px; overflow: hidden;" data-href="http://blogizzle.com{{url_for('read', slug = post.slug)}}" data-send="true" data-layout="button_count" data-width="120" data-show-faces="false" data-font="verdana"></span>&nbsp;
+              <div class="g-plusone" data-size="medium" data-href="http://blogizzle.com{{url_for('read', slug = post.slug)}}"></div>
+            </div>
           </p>
         </footer>
     </article>
