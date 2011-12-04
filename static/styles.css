@@ -192,6 +192,17 @@ span.time, p.asterisk {
 
 
 /* Forms */
+fieldset {
+    border: 0 none;
+    position: relative;
+    left: 10%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    white-space: pre-wrap;
+    width: 80%;
+}
+
 legend {
     color: #08131C;
 }
@@ -199,6 +210,10 @@ legend {
 label {
     white-space: nowrap;
     width: 26em;
+}
+
+button, legend, label, input, textarea {
+    font-family: 'Cardo',courier,monospace,serif;
 }
 
 button {
@@ -219,16 +234,19 @@ input, textarea {
     color: #1A1E21;
     background: white;
     border: thin dashed gray;
-    font-family: courier,monospace;
     font-size: 12pt;
+    width: 100%;
+}
+
+textarea {
+    white-space: pre-wrap;
 }
 
 input[name="title"] {
-    font-size: 16pt;
-    width: 30em;
     color: #08131C;
     font-size: 20pt;
     font-weight: bold;
+    overflow: hidden;
 }
 
 input[type="datetime-local"] {
@@ -240,6 +258,7 @@ input[name="author"], input[type="email"] {
     width: 20em;
 }
 
+/* article formatting */
 
 pre {
     white-space: pre-wrap;
